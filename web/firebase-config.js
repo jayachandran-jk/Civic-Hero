@@ -5,13 +5,13 @@ import { getDatabase } from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDh3Ym2EqQvv6Mtc6aH_4ryjf0Q614Eq7k",
-  authDomain: "civichero-480a3.firebaseapp.com",
-  databaseURL: "https://civichero-480a3-default-rtdb.firebaseio.com",
-  projectId: "civichero-480a3",
-  storageBucket: "civichero-480a3.firebasestorage.app",
-  messagingSenderId: "727957080527",
-  appId: "1:727957080527:web:your-web-app-id"
+  apiKey: "AIzaSyDGO_1c2xhgPi0-m0RU_OK9oN-pxRTPSN8",
+  authDomain: "civicissue-aae6d.firebaseapp.com",
+  projectId: "civicissue-aae6d",
+  storageBucket: "civicissue-aae6d.firebasestorage.app",
+  messagingSenderId: "559012084553",
+  appId: "1:559012084553:web:371c1340ab7d25dc25f898",
+  measurementId: "G-VN5FRB53KV"
 };
 
 // Initialize Firebase

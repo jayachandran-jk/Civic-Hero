@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -17,15 +18,34 @@ class AuthService extends ChangeNotifier {
       isLoading = true;
       notifyListeners();
 
+      debugPrint('🔐 Admin: Attempting to sign in with email: $email');
+
+      // Check if Firebase is initialized
+      if (Firebase.apps.isEmpty) {
+        debugPrint('❌ Firebase not initialized');
+        throw Exception('Firebase not initialized. Please restart the app.');
+      }
+
       UserCredential result =
           await _auth.signInWithEmailAndPassword(email: email, password: password);
       user = result.user;
 
+      debugPrint('✅ Admin: Authentication successful for: ${user?.email}');
+
       final doc = await _firestore.collection('adminusers').doc(user!.uid).get();
-      if (!doc.exists) return false;
+      if (!doc.exists) {
+        debugPrint('❌ Admin: User document not found in adminusers collection');
+        await _auth.signOut();
+        user = null;
+        isLoading = false;
+        notifyListeners();
+        return false;
+      }
 
       final data = doc.data()!;
       currentDepartment = data['department'] ?? '';
+
+      debugPrint('✅ Admin: Department assigned: $currentDepartment');
 
       await user?.updateDisplayName(currentDepartment);
       await user?.reload();
@@ -38,10 +58,15 @@ class AuthService extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
       return true;
+    } on FirebaseAuthException catch (e) {
+      isLoading = false;
+      notifyListeners();
+      debugPrint("❌ Admin Login Error (${e.code}): ${e.message}");
+      return false;
     } catch (e) {
       isLoading = false;
       notifyListeners();
-      debugPrint("Login Error: $e");
+      debugPrint("❌ Admin Login Error: $e");
       return false;
     }
   }

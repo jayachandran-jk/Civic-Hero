@@ -68,17 +68,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                 _passwordController.text.trim(),
                               );
                               if (!success) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Login failed. Please check credentials.')),
-                                );
+                                if (mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text('Login failed. Please check credentials and ensure Firebase is properly configured.'),
+                                      backgroundColor: Colors.red,
+                                      duration: Duration(seconds: 4),
+                                    ),
+                                  );
+                                }
                               } else {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(builder: (_) =>  DashboardScreen()),
-        
-
-                                );
+                                if (mounted) {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(builder: (_) => const DashboardScreen()),
+                                  );
+                                }
                               }
                             },
                       child: authService.isLoading

@@ -9,17 +9,24 @@ import 'screens/dashboard_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: const FirebaseOptions(
-      apiKey: "AIzaSyC_WZgd5rptD8s0-9UctRM2WmwRXsfI374",
-      authDomain: "civichero-480a3.firebaseapp.com",
-      databaseURL: "https://civichero-480a3-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "civichero-480a3",
-      storageBucket: "civichero-480a3.firebasestorage.app",
-      messagingSenderId: "727957080527",
-      appId: "1:727957080527:web:4c113159d36a3f0540eaba",
-    ),
-  );
+  // Initialize Firebase with error handling
+  try {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyDGO_1c2xhgPi0-m0RU_OK9oN-pxRTPSN8",
+        authDomain: "civicissue-aae6d.firebaseapp.com",
+        projectId: "civicissue-aae6d",
+        storageBucket: "civicissue-aae6d.firebasestorage.app",
+        messagingSenderId: "559012084553",
+        appId: "1:559012084553:web:371c1340ab7d25dc25f898",
+        // Note: databaseURL removed as app uses Firestore, not Realtime Database
+      ),
+    );
+    print('✅ Firebase initialized successfully (Admin App) - Project: civicissue-aae6d');
+  } catch (e) {
+    print('❌ Firebase initialization failed (Admin App): $e');
+    // Continue anyway - error will show in UI
+  }
 
   runApp(const MyApp());
 }

@@ -20,7 +20,9 @@ dependencies:
   flutter_web_plugins:
     sdk: flutter
   intl: ^0.18.1   # <-- Added intl for DateFormat
-  flutter_map: ^7.0.0  
+  flutter_map: ^7.0.0
+  http: ^1.1.0  
+  flutter_map_marker_cluster: ^1.4.0
 
 dev_dependencies:
   flutter_test:
